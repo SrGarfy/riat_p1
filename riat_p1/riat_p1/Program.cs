@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace riat_p1
 {
-    delegate int myDelegate(string a, string b);
+    delegate bool myDelegate(string a, string b);
 
     class Program
     {
-        static int compare(string a, string b)
+        static bool compare(string a, string b)
         {
-            return 0;
+            return (a.Length > b.Length ? true : false);
         }
 
         static string[] interfaceSort(string[] strings, IComparer<string> comparer)
@@ -20,8 +20,20 @@ namespace riat_p1
             return strings.OrderBy(a => a, comparer).ToArray();
         }
 
-        static string[] funcSort(string[] strings, Func<string, string, int> comparer)
+        static string[] funcSort(string[] strings, Func<string, string, bool> compare)
         {
+            for (var i = 0; i < strings.Length; i++)
+            {
+                for (var j = i; j < strings.Length; j++)
+                {
+                    if (compare(strings[i], strings[j]))
+                    {
+                        var tmp = strings[i];
+                        strings[i] = strings[j];
+                        strings[j] = tmp;
+                    }
+                }
+            }
             return strings;
         }
 
@@ -35,9 +47,9 @@ namespace riat_p1
             var interfaceSorted = interfaceSort(strings, new Comparer());
             var funcSorted = funcSort(strings, compare);
             var delegateSorted1 = delegateSort(strings, compare);
-            var delegateSorted2 = delegateSort(strings, (a,b) => (a == b ? 1 : 0));
+            var delegateSorted2 = delegateSort(strings, (a,b) => (a == b));
 
-            foreach (var s in interfaceSorted)
+            foreach (var s in funcSorted)
             {
                 Console.WriteLine(s);
             }
