@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;   
+using System.Threading.Tasks;
 
 namespace riat_p1
 {
@@ -17,7 +17,7 @@ namespace riat_p1
 
         static string[] interfaceSort(string[] strings, IComparer<string> comparer)
         {
-            return strings;
+            return strings.OrderBy(a => a, comparer).ToArray();
         }
 
         static string[] funcSort(string[] strings, Func<string, string, int> comparer)
@@ -36,6 +36,11 @@ namespace riat_p1
             var funcSorted = funcSort(strings, compare);
             var delegateSorted1 = delegateSort(strings, compare);
             var delegateSorted2 = delegateSort(strings, (a,b) => (a == b ? 1 : 0));
+
+            foreach (var s in interfaceSorted)
+            {
+                Console.WriteLine(s);
+            }
         }
     }
 }

@@ -10,7 +10,10 @@ namespace riat_p1
     {
         public int Compare(string a, string b)
         {
-            return 0;
+            return (a.Length > b.Length ? 
+                1 : 
+                (a.Length == b.Length ? 0 : -1)
+                );
         }
     }
 }
